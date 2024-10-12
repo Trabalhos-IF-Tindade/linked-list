@@ -81,11 +81,42 @@ class UnsortedDoublyLinkedList {
     }
 
     listContent() {
-        throw new Error("Unimplemented method 'listContent'");
+        
+        let content = '';
+        let element = this.first;
+
+        while(element !=null){
+            content += element.getValue();
+            if(element.next != null){
+                content += '->'
+            }
+
+            element = element.next;
+        }
+
+        return content
     }
 
     listContentReverse() {
-        throw new Error("Unimplemented method 'listContentReverse'");
+        let content = '';
+        let element = this.first;
+
+        while(element !=null){
+            content += element.getValue();
+            if(element.next != null){
+                content += '->'
+            }
+
+            element = element.next;
+        }
+
+        let array = content.split('->');
+        array.reverse()
+
+        let novaString = array.toString()
+        novaString = novaString.replace(/,/g, '->');
+
+        return novaString;
     }
 
     clearNavigation() {
@@ -106,5 +137,7 @@ let a = new UnsortedDoublyLinkedList();
 a.append(1);
 a.append(2);
 a.append(3);
-a.remove(1)
-console.log(JSON.stringify(a.first));
+a.append(4);
+a.append(5);
+//a.remove(1)
+console.log(a.listContentReverse());

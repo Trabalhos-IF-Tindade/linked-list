@@ -20,7 +20,7 @@ class UnsortedDoublyLinkedList {
         } else {
 
             this.last.next = newNode;
-            newNode.previous = this.last.getValue()
+            newNode.previous = this.last
             this.last = newNode;
         }
     }
@@ -37,7 +37,7 @@ class UnsortedDoublyLinkedList {
 
         } else {
             newNode.next = this.first;
-            this.first.previous = newNode.getValue()
+            this.first.previous = newNode
             this.first = newNode;
         }
     }
@@ -60,7 +60,7 @@ class UnsortedDoublyLinkedList {
 
             if (currentValue === value) {
                 previousNode.next = element.next;
-                element.next.previous = previousNode.getValue()
+                element.next.previous = previousNode
                 element = null;
                 return true;
             }
@@ -100,13 +100,13 @@ class UnsortedDoublyLinkedList {
         while(element !=null){
             content += element.getValue();
             if(element.next != null){
-                content += '<->'
+                content += ' <-> '
             }
 
             element = element.next;
         }
 
-        return content
+        return `null <- ${content} -> null`
     }
 
     listContentReverse() {
@@ -116,19 +116,19 @@ class UnsortedDoublyLinkedList {
         while(element !=null){
             content += element.getValue();
             if(element.next != null){
-                content += '->'
+                content += '<->'
             }
 
             element = element.next;
         }
 
-        let array = content.split('->');
+        let array = content.split('<->');
         array.reverse()
 
         let novaString = array.toString()
-        novaString = novaString.replace(/,/g, '->');
+        novaString = novaString.replace(/,/g, ' <-> ');
 
-        return novaString;
+        return `null <- ${novaString} -> null`
     }
 
     clearNavigation() {
@@ -169,16 +169,17 @@ let a = new UnsortedDoublyLinkedList();
 a.append(1);
 a.append(2);
 a.append(3); 
+console.log(a.listContent())
 a.append(10); 
-a.getNextElement();
-a.getNextElement();
-a.getPreviousElement();
-
-let primeiro = a.first
-while(primeiro.next != null){
-    console.log(primeiro.getValue())
-    primeiro = primeiro.next
-}
-console.log(primeiro.getValue())
-
-// console.log(JSON.stringify(a.first));
+console.log(a.listContent())
+a.getNextElement()
+a.getNextElement()
+console.log(a.pointer.getValue())
+a.getNextElement()
+console.log(a.pointer.getValue())
+a.getPreviousElement()
+console.log(a.pointer.getValue())
+a.remove(3)
+console.log(a.pointer.getValue())
+console.log(a.listContent())
+console.log(a.listContentReverse())

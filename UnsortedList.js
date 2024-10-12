@@ -22,7 +22,6 @@ class UnsortedDoublyLinkedList {
             this.last.next = newNode;
             newNode.previous = this.last.getValue()
             this.last = newNode;
-
         }
     }
 
@@ -51,7 +50,7 @@ class UnsortedDoublyLinkedList {
             this.first.next.previous = null
             this.first = this.first.next;
             return true;
-        } 
+        }
 
         let element = this.first
         let previousNode = null;
@@ -73,11 +72,24 @@ class UnsortedDoublyLinkedList {
     }
 
     find(value) {
-        throw new Error("Unimplemented method 'find'");
+        let element = this.first;
+
+        while (element != null) {
+            let currentValue = element.getValue();
+
+            if (currentValue === value) {
+                return currentValue;
+            }
+
+            element = element.next;
+        }
+        return null;
     }
 
     clear() {
-        throw new Error("Unimplemented method 'clear'");
+        this.first = null;
+        this.last = null;
+        this.pointer = null;
     }
 
     listContent() {
@@ -88,7 +100,7 @@ class UnsortedDoublyLinkedList {
         while(element !=null){
             content += element.getValue();
             if(element.next != null){
-                content += '->'
+                content += '<->'
             }
 
             element = element.next;
@@ -120,15 +132,35 @@ class UnsortedDoublyLinkedList {
     }
 
     clearNavigation() {
-        throw new Error("Unimplemented method 'clearNavigation'");
+        this.pointer = this.first;
     }
 
     getNextElement() {
-        throw new Error("Unimplemented method 'getNextElement'");
+        if (this.first == null || this.last == null) {
+            return null;
+        }
+
+        if (this.pointer == null) {
+            return null;
+        }
+
+        let value = this.pointer.getValue();
+        this.pointer = this.pointer.next;
+        return value;
     }
 
+
     getPreviousElement() {
-        throw new Error("Unimplemented method 'getPreviousElement'");
+        if (this.first == null || this.last == null) {
+            return null;
+        }
+
+        if (this.pointer == null) {
+            return null;
+        }
+        let value = this.pointer.getValue();
+        this.pointer = this.pointer.previous;
+        return value;
     }
 }
 
@@ -136,8 +168,17 @@ let a = new UnsortedDoublyLinkedList();
 
 a.append(1);
 a.append(2);
-a.append(3);
-a.append(4);
-a.append(5);
-//a.remove(1)
-console.log(a.listContentReverse());
+a.append(3); 
+a.append(10); 
+a.getNextElement();
+a.getNextElement();
+a.getPreviousElement();
+
+let primeiro = a.first
+while(primeiro.next != null){
+    console.log(primeiro.getValue())
+    primeiro = primeiro.next
+}
+console.log(primeiro.getValue())
+
+// console.log(JSON.stringify(a.first));

@@ -1,4 +1,5 @@
-import Node from "./Node.js"
+const Node = require('../src/Node.js');
+
 
 class UnsortedDoublyLinkedList {
     constructor() {
@@ -46,30 +47,40 @@ class UnsortedDoublyLinkedList {
         if (this.first == null || this.last == null) {
             return false;
         }
+    
         if (this.first.getValue() === value) {
-            this.first.next.previous = null
+            if (this.first.next != null) {
+                this.first.next.previous = null;
+            }
             this.first = this.first.next;
             return true;
         }
-
-        let element = this.first
+    
+        let element = this.first;
         let previousNode = null;
-
+    
         while (element != null) {
             let currentValue = element.getValue();
-
+    
             if (currentValue === value) {
                 previousNode.next = element.next;
-                element.next.previous = previousNode
+                if (element.next != null) {
+                    element.next.previous = previousNode;
+                } else {
+                    // Se o elemento é o último, atualiza o ponteiro 'last'
+                    this.last = previousNode;
+                }
                 element = null;
                 return true;
             }
-            previousNode = element
-            element = element.next
+    
+            previousNode = element;
+            element = element.next;
         }
-
-        return false
+    
+        return false;
     }
+    
 
     find(value) {
         let element = this.first;
@@ -151,18 +162,25 @@ class UnsortedDoublyLinkedList {
 
 
     getPreviousElement() {
-        if (this.first == null || this.last == null) {
+        if (this.first == null || this.last == null || this.pointer == null) {
             return null;
         }
-
-        if (this.pointer == null) {
-            return null;
+    
+        if (this.pointer.previous != null) {
+            this.pointer = this.pointer.previous;
+            return this.pointer.getValue();
+        } else {
+            // Se não houver elemento anterior, apenas retorna o valor atual sem mover o ponteiro
+            return this.pointer.getValue();
         }
-        let value = this.pointer.getValue();
-        this.pointer = this.pointer.previous;
-        return value;
     }
+    
+    
+    
 }
+
+module.exports = UnsortedDoublyLinkedList;
+
 
 let a = new UnsortedDoublyLinkedList();
 

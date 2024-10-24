@@ -8,14 +8,12 @@ describe('UnsortedDoublyLinkedList', () => {
         lista = new UnsortedDoublyLinkedList();
     });
 
-    // Testes para inicialização
     test('deve inicializar com first, last e pointer nulos', () => {
         expect(lista.first).toBeNull();
         expect(lista.last).toBeNull();
         expect(lista.pointer).toBeNull();
     });
 
-    // Testes para o método append
     test('append: deve adicionar um único elemento a uma lista vazia', () => {
         lista.append(1);
         expect(lista.first.getValue()).toBe(1);
@@ -31,7 +29,6 @@ describe('UnsortedDoublyLinkedList', () => {
         expect(lista.last.getValue()).toBe(3);
     });
 
-    // Testes para o método prepend
     test('prepend: deve adicionar um único elemento a uma lista vazia', () => {
         lista.prepend(1);
         expect(lista.first.getValue()).toBe(1);
@@ -46,7 +43,6 @@ describe('UnsortedDoublyLinkedList', () => {
         expect(lista.last.getValue()).toBe(1);
     });
 
-    // Testes para o método remove
     test('remove: deve retornar false ao tentar remover de uma lista vazia', () => {
         expect(lista.remove(1)).toBe(false);
     });
@@ -73,7 +69,6 @@ describe('UnsortedDoublyLinkedList', () => {
         expect(lista.first.next.getValue()).toBe(3);
     });
 
-    // Testes para o método find
     test('find: deve encontrar um valor existente', () => {
         lista.append(1);
         lista.append(2);
@@ -85,7 +80,6 @@ describe('UnsortedDoublyLinkedList', () => {
         expect(lista.find(3)).toBeNull();
     });
 
-    // Testes para o método clear
     test('clear: deve limpar uma lista não vazia', () => {
         lista.append(1);
         lista.append(2);
@@ -95,7 +89,6 @@ describe('UnsortedDoublyLinkedList', () => {
         expect(lista.pointer).toBeNull();
     });
 
-    // Testes para os métodos listContent e listContentReverse
     test('listContent: deve exibir o conteúdo na ordem correta', () => {
         lista.append(1);
         lista.append(2);
@@ -109,7 +102,6 @@ describe('UnsortedDoublyLinkedList', () => {
         expect(lista.listContentReverse()).toBe('null <- 3 <-> 2 <-> 1 -> null');
     });
 
-    // Testes para os métodos de navegação getNextElement e getPreviousElement
     test('getNextElement: deve retornar o próximo elemento', () => {
         lista.append(1);
         lista.append(2);
@@ -123,30 +115,66 @@ describe('UnsortedDoublyLinkedList', () => {
         lista.append(2);
         lista.append(3);
     
-        // Avança para o segundo e depois para o terceiro elemento
-        lista.getNextElement(); // Aponta para 1
-        lista.getNextElement(); // Aponta para 2
+        lista.getNextElement();
+        lista.getNextElement(); 
     
-        // Agora deve voltar para o segundo elemento
         expect(lista.getPreviousElement()).toBe(2);
-        // Adiciona uma verificação para o próximo elemento
-        expect(lista.getPreviousElement()).toBe(1); // Retornando ao primeiro
+        expect(lista.getPreviousElement()).toBe(1); 
     });
     
 
-    // Testes para o método clearNavigation
     test('clearNavigation: deve reiniciar o ponteiro para o primeiro elemento', () => {
         lista.append(1);
         lista.append(2);
         lista.append(3);
         lista.getNextElement();
-        lista.getNextElement(); // Avança para o segundo elemento
+        lista.getNextElement(); 
         lista.clearNavigation();
-        expect(lista.pointer.getValue()).toBe(1); // Ponteiro deve ser reiniciado para o primeiro elemento
+        expect(lista.pointer.getValue()).toBe(1); 
     });
 
     test('clearNavigation: deve funcionar em uma lista vazia', () => {
         lista.clearNavigation();
-        expect(lista.pointer).toBeNull(); // Ponteiro deve continuar nulo
+        expect(lista.pointer).toBeNull();
     });
+
+    //..............................
+    test('navigateThroughAllElements: deve navegar por todos os elementos e retornar null no final', () => {
+        lista.append(1);
+        lista.append(2);
+        lista.append(3);
+    
+        expect(lista.getNextElement()).toBe(1);
+        expect(lista.getNextElement()).toBe(2);
+        expect(lista.getNextElement()).toBe(3);
+        expect(lista.getNextElement()).toBeNull(); // Checando que chegou ao final da lista
+    });
+    
+    test('navigateThroughElementsAndRestartNavigationPointer: deve reiniciar o ponteiro de navegação corretamente', () => {
+        lista.append(1);
+        lista.append(2);
+        lista.append(3);
+    
+        lista.getNextElement();
+        lista.getNextElement();
+    
+        lista.clearNavigation();
+    
+        expect(lista.getNextElement()).toBe(1);
+        expect(lista.getNextElement()).toBe(2);
+        expect(lista.getNextElement()).toBe(3);
+        expect(lista.getNextElement()).toBeNull();
+    });
+//................................
+test('remove: deve remover o único elemento em uma lista com um elemento', () => {
+    lista.append(1);
+    expect(lista.remove(1)).toBe(true);
+    expect(lista.listContent()).toBe('null <-  -> null');
+});
+
+//......................
+test('retrieveAnEmptyList: deve retornar conteúdo vazio para uma lista sem elementos', () => {
+    expect(lista.listContent()).toBe('null <-  -> null');
+});
+
 });
